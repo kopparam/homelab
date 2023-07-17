@@ -7,7 +7,7 @@ services:
     volumes:
       - ./soft-serve:/soft-serve
     ports:
-      - 2323:23231
+      - 23231:23231
       - 23232:23232
       - 23233:23233
       - 9418:9418
