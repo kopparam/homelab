@@ -25,7 +25,5 @@ services:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN_CHERISH}
     restart: always
-  netshoot:
-    image: nicolaka/netshoot
 volumes:
   portainer_data:
