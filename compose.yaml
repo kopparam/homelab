@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.8"
 name: homelab
 services:
   soft-serve:
@@ -12,3 +12,20 @@ services:
       - 23233:23233
       - 9418:9418
     restart: unless-stopped
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - 8000:8000
+      - 9443:9443
+  cloudflare_tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN_CHERISH}
+    restart: always
+  netshoot:
+    image: nicolaka/netshoot
+volumes:
+  portainer_data:
