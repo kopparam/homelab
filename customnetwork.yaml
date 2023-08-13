@@ -1,0 +1,9 @@
+version: "3.8"
+name: cn
+services:
+  n1:
+    image: nicolaka/netshoot
+    container_name: n1
+  n2:
+    image: nickloaka/netshoot
+    container_name: n1
