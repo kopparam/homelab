@@ -1,0 +1,65 @@
+name: homelab-gateway
+services:
+  nginx:
+    image: "jc21/nginx-proxy-manager:2.10.4"
+    restart: unless-stopped
+    networks:
+      - homelab-network
+    ports:
+      - "443:443" # Public HTTPS Port
+      - "81:81" # Admin Web Port
+    secrets:
+      - mysql-nginx-proxy-manager-password
+    environment:
+      # Mysql/Maria connection parameters:
+      DB_MYSQL_HOST: "mysql-db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "nginx_proxy_manager"
+      DB_MYSQL_PASSWORD__FILE: /run/secrets/mysql-nginx-proxy-manager-password
+      DB_MYSQL_NAME: "nginx_proxy_manager"
+      # Uncomment this if IPv6 is not enabled on your host
+      # DISABLE_IPV6: 'true'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: "mysql:8"
+    restart: unless-stopped
+    networks:
+      - homelab-network
+    secrets:
+      - mysql-root-password
+      - mysql-secrets
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root-password
+      NGINX_PROXY_MANAGER_USER: nginx_proxy_manager
+      NGINX_PROXY_MANAGER_DB_NAME: nginx_proxy_manager
+    volumes:
+      - homelab-mysql-volume:/var/lib/mysql
+      - ./mysql/init-scripts:/docker-entrypoint-initdb.d
+
+  cloudflare_tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN_CHERISH}
+    restart: always
+    networks:
+      - homelab-network
+
+networks:
+  homelab-network:
+    external: true
+
+volumes:
+  homelab-mysql-volume:
+    external: true
+
+secrets:
+  mysql-root-password:
+    file: ./mysql/secrets/root-password.txt
+  mysql-secrets:
+    file: ./mysql/secrets/secrets.env
+  mysql-nginx-proxy-manager-password:
+    file: ./mysql/secrets/nginx-proxy-manager-password.txt
