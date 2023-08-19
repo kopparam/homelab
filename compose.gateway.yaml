@@ -3,8 +3,6 @@ services:
   nginx:
     image: "jc21/nginx-proxy-manager:2.10.4"
     restart: unless-stopped
-    networks:
-      - homelab-network
     ports:
       - "443:443" # Public HTTPS Port
       - "81:81" # Admin Web Port
@@ -20,19 +18,19 @@ services:
       # Uncomment this if IPv6 is not enabled on your host
       # DISABLE_IPV6: 'true'
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - ./nginx-proxy-manager/data:/data
+      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     depends_on:
       - mysql-db
 
   mysql-db:
     image: "mysql:8"
     restart: unless-stopped
-    networks:
-      - homelab-network
     secrets:
       - mysql-root-password
       - mysql-secrets
+    ports:
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root-password
       NGINX_PROXY_MANAGER_USER: nginx_proxy_manager
@@ -45,11 +43,10 @@ services:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN_CHERISH}
     restart: always
-    networks:
-      - homelab-network
 
 networks:
-  homelab-network:
+  default:
+    name: homelab-network
     external: true
 
 volumes:

@@ -1,4 +1,5 @@
 /soft-serve/*
 !/soft-serve/config.yaml
-!id_ed25119.key
-!.env
+.env
+**/secrets/*
+/nginx-proxy-manager/
