@@ -3,24 +3,17 @@ services:
   traefik:
     image: traefik:v2.10
     command:
+      - "--entryPoints.websecure.address=:443"
       - "--api.insecure=true"
       - "--providers.docker"
       - "--providers.docker.exposedByDefault=false"
+      - "--serverstransport.insecureskipverify=true"
     ports:
-      - 80:80
+      - 443:443
       - 8080:8080
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-
-  whoami:
-    # A container that exposes an API to show its IP address
-    image: traefik/whoami
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=PathPrefix(`/whoami`)"
-      - "traefik.http.middlewares.whoami-stripprefix.stripprefix.prefixes=/whoami"
-      - "traefik.http.routers.whoami.middlewares=whoami-stripprefix@docker"
 
   cloudflare_tunnel:
     image: cloudflare/cloudflared:latest
