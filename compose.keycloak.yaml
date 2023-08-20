@@ -9,15 +9,43 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.1
     ports:
-      - 8080:8080
+      - 8443:8443
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
-      # - KC_PROXY=edge
+      - KC_PROXY=reencrypt
       # Use when configuring Cloudflare Tunnel
       # - KC_HOSTNAME_SCTRICT=false
-      - KC_HOSTNAME=localhost
-      # Change to default 443 when using Cloudflare Tunnel
-      - KC_PORT=8080
+      - KC_HTTPS_CERTIFICATE_FILE=/secrets/certificate.pem
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/secrets/key.pem
+      - KC_HOSTNAME=secure.kopparam.com
+      - KC_HOSTNAME_SCRICT_BACKCHANNEL=true
+      - KC_HOSTNAME_ADMIN=secure.kopparam.com
+    volumes:
+      - ./keycloak/secrets:/secrets
     command:
       - "start"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.traefik.rule=Host(`secure.kopparam.com`)"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[0].name=InitForwardedHeader"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[0].type=Set"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[0].value="
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[0].header=Forwarded"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[1].name=SetForwardedHeader"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[1].type=Join"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[1].header=Forwarded"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[1].headerPrefix=^"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[1].sep=,"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[1].values[0]=^Cf-Connecting-Ip"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[2].name=InitXForwardedForHeader"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[2].type=Set"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[2].value="
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[2].header=X-Forwarded-For"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[3].name=SetXForwardedForHeader"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[3].type=Join"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[3].header=X-Forwarded-For"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[3].headerPrefix=^"
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[3].sep="
+    #   - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[3].values[0]=^Cf-Connecting-Ip"
+    #   - "traefik.http.routers.traefik.middlewares=keycloak-proxy-headers@docker"
