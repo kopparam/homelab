@@ -1,7 +1,7 @@
 # My Homelab
 
 This projects contains the configuration of my home lab setup.
-It is mainly a single docker compose file which configures all the applications
+It is a collection of docker compose files which configures all the applications
 
 <!-- , exposed with a traefik reverse proxy exposing it to the web. -->
 
@@ -17,22 +17,38 @@ The docker workload is run on my Lenovo Windows Laptop
    ```
    docker network create homelab-network
    ```
-1. Create a volume for mysql so that the data is persistent across compose up's and down's.
+1. Create a volume for portainer so that the data is persistent across compose up's and down's.
    ```
-   docker volume create homelab-mysql-volume
+   docker volume create portainer-data
    ```
 
-## Nginx Proxy Manager
+## Gateway
 
-Nginx Proxy Manager is the gateway to homelab, providing a nice UI to manage routing, SSL, and other configurations.
-It uses a MySQL database to store all the configurations.
+This is the gateway to the homelab, which is exposed to the internet.
 
-### Setup MySQL
+It used Cloudflare Tunnel to establish a reverse tunnel to the cloudflare's network.
 
-1. Change the secrets of MySQL by replacing `changeme` with a strong password in the following files
-   1. mysql/secrets/root-password.txt
-   2. mysql/secrets/nginx-proxy-manager-password.txt
-   3. mysql/secrets/secrets.env
+Set the following environment variables in the `.env` file
+
+```env
+CLOUDFLARE_TUNNEL_TOKEN=<token>
+```
+
+Then start the gateway using the following command
+
+```
+docker compose -f compose.gateway.yaml up -d
+```
+
+### Traefik - Reverse Proxy
+
+Traefik is the reverse proxt to homelab, to manage routing, SSL, and other configurations for HTTP trafic management within the Docker instance.
+
+## Portainer
+
+https://homelab.kopparam.com/portainer
+
+Portainer is a nice UI to manage the Docker Desktop instance.
 
 ## [Softserve](https://github.com/charmbracelet/soft-serve) - Git Server
 
