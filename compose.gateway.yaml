@@ -17,16 +17,12 @@ services:
 
   cloudflare_tunnel:
     image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN_CHERISH}
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
     restart: always
 
 networks:
   default:
     name: homelab-network
-    external: true
-
-volumes:
-  homelab-mysql-volume:
     external: true
 
 secrets:
