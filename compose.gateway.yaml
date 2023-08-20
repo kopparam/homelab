@@ -5,7 +5,7 @@ services:
     command:
       - "--entryPoints.websecure.address=:443"
       - "--api.insecure=true"
-      - "--providers.docker"
+      - "--providers.docker=true"
       - "--providers.docker.exposedByDefault=false"
       - "--serverstransport.insecureskipverify=true"
     ports:
