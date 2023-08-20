@@ -8,13 +8,13 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedByDefault=false"
       - "--serverstransport.insecureskipverify=true"
-      # - "--accesslog=true"
+      - "--accesslog=true"
       # - "--accesslog.fields.defaultmode=keep"
       # - "--accesslog.fields.names.ClientUsername=drop"
       # - "--accesslog.fields.headers.defaultmode=keep"
       # - "--accesslog.format=json"
-      # - "--experimental.plugins.htransformation.modulename=github.com/tomMoulard/htransformation"
-      # - "--experimental.plugins.htransformation.version=v0.2.7"
+      - "--experimental.plugins.htransformation.modulename=github.com/tomMoulard/htransformation"
+      - "--experimental.plugins.htransformation.version=v0.2.7"
     ports:
       - 443:443
       - 8080:8080
