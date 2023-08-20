@@ -17,13 +17,13 @@ services:
       - 9443:9443
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=PathPrefix(`/portainer`)"
-      - "traefik.http.middlewares.traefik-stripprefix.stripprefix.prefixes=/portainer"
-      - "traefik.http.routers.traefik.middlewares=traefik-stripprefix@docker"
-      - "traefik.http.routers.traefik.entrypoints=websecure"
-      - "traefik.http.routers.traefik.tls=true"
-      - "traefik.http.services.traefik.loadbalancer.server.scheme=https"
-      - "traefik.http.services.traefik.loadbalancer.server.port=9443"
+      - "traefik.http.routers.portainer.rule=PathPrefix(`/portainer`)"
+      - "traefik.http.middlewares.portainer-stripprefix.stripprefix.prefixes=/portainer"
+      - "traefik.http.routers.portainer.middlewares=portainer-stripprefix@docker"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.services.portainer.loadbalancer.server.scheme=https"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9443"
 volumes:
   portainer-data:
     external: true
