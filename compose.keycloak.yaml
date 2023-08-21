@@ -5,9 +5,35 @@ networks:
     name: homelab-network
     external: true
 
+volumes:
+  homelab-postgres-data:
+    external: true
+
+secrets:
+  postgres-db-password:
+    file: ./keycloak/secrets/postgres-db-password.txt
+  keycloak-db-password:
+    file: ./keycloak/secrets/keycloak-db-password.txt
+
 services:
+  postgres:
+    image: postgres:15
+    secrets:
+      - postgres-db-password
+      - keycloak-db-password
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-db-password
+      - KEYCLOAK_DB_NAME=keycloak
+      - KEYCLOAK_DB_USER=keycloak
+    volumes:
+      - homelab-postgres-data:/var/lib/postgresql/data
+      - ./keycloak/initdb:/docker-entrypoint-initdb.d
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.1
+    depends_on:
+      - postgres
     ports:
       - 8443:8443
     environment:
@@ -21,6 +47,11 @@ services:
       - KC_HOSTNAME=secure.kopparam.com
       - KC_HOSTNAME_SCRICT_BACKCHANNEL=true
       - KC_HOSTNAME_ADMIN=secure.kopparam.com
+      - KC_DB=postgres
+      - KC_DB_URL_HOST=postgres
+      - KC_DB_URL_DATABASE=keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
     volumes:
       - ./keycloak/secrets:/secrets
     command:
