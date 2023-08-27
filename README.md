@@ -44,6 +44,13 @@ docker compose -f compose.gateway.yaml up -d
 
 Traefik is the reverse proxt to homelab, to manage routing, SSL, and other configurations for HTTP trafic management within the Docker instance.
 
+## Keycloak - Identity Provider
+
+1. Create a self-signed cert
+   `openssl req -newkey rsa:4096 -nodes -keyout ./keycloak/secrets/key.pem -x509 -days 365 -out ./keycloak/secrets/certificate.pem`
+2. Create volume for postgres
+   `docker volume create homelab-postgres-data`
+
 ## Portainer
 
 https://homelab.kopparam.com/portainer
