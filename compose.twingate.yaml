@@ -1,0 +1,18 @@
+name: homelab-twingate
+
+networks:
+  default:
+    name: homelab-network
+    external: true
+
+services:
+  twingate:
+    image: twingate/connector:latest
+    container_name: twingate-connector
+    restart: unless-stopped
+    environment:
+      - TWINGATE_NETWORK=kashyap
+      - TWINGATE_ACCESS_TOKEN=${TWINGATE_ACCESS_TOKEN:?err}
+      - TWINGATE_REFRESH_TOKEN=${TWINGATE_REFRESH_TOKEN:?err}
+    syscyls:
+      net.ipv4.ping_group_range: "0 2147483647"
