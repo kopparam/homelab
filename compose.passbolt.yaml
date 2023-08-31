@@ -25,7 +25,7 @@ services:
     depends_on:
       - passbolt-db
     environment:
-      - APP_FULL_BASE_URL=https://homelab.kopparam.com/passbolt
+      # - APP_FULL_BASE_URL=https://homelab.kopparam.com/passbolt
       - APP_BASE=/passbolt
       - DATASOURCES_DEFAULT_HOST=passbolt-db
       - DATASOURCES_DEFAULT_USERNAME=${PASSBOLT_DB_USER:?err}
@@ -56,8 +56,8 @@ services:
       - "traefik.http.routers.passbolt.tls=true"
       - "traefik.http.services.passbolt.loadbalancer.server.scheme=https"
       - "traefik.http.services.passbolt.loadbalancer.server.port=443"
-      # - "traefik.http.middlewares.passbolt-stripprefix.stripprefix.prefixes=/portainer"
-      # - "traefik.http.routers.passbolt.middlewares=passbolt-stripprefix@docker"
+      - "traefik.http.middlewares.passbolt-stripprefix.stripprefix.prefixes=/passbolt"
+      - "traefik.http.routers.passbolt.middlewares=passbolt-stripprefix@docker"
     # ports:
     #   - 80:80
     #   - 443:443
