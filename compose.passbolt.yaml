@@ -49,6 +49,13 @@ services:
         "--",
         "/docker-entrypoint.sh",
       ]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.passbolt.rule=Host(`homelab.kopparam.com`) && PathPrefix(`/passbolt`)"
+      - "traefik.http.routers.keycloak.entrypoints=websecure"
+      - "traefik.http.routers.keycloak.tls=true"
+      - "traefik.http.services.keycloak.loadbalancer.server.scheme=https"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=443"
     # ports:
     #   - 80:80
     #   - 443:443
