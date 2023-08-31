@@ -26,7 +26,7 @@ services:
       - passbolt-db
     environment:
       # - APP_FULL_BASE_URL=https://passbolt.kopparam.com
-      - APP_BASE=/passbolt/
+      - APP_BASE=passbolt/
       - DATASOURCES_DEFAULT_HOST=passbolt-db
       - DATASOURCES_DEFAULT_USERNAME=${PASSBOLT_DB_USER:?err}
       - DATASOURCES_DEFAULT_PASSWORD=${PASSBOLT_DB_PASS:?err}
