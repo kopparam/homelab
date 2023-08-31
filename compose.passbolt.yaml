@@ -52,10 +52,12 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.passbolt.rule=Host(`homelab.kopparam.com`) && PathPrefix(`/passbolt`)"
-      - "traefik.http.routers.keycloak.entrypoints=websecure"
-      - "traefik.http.routers.keycloak.tls=true"
-      - "traefik.http.services.keycloak.loadbalancer.server.scheme=https"
-      - "traefik.http.services.keycloak.loadbalancer.server.port=443"
+      - "traefik.http.routers.passbolt.entrypoints=websecure"
+      - "traefik.http.routers.passbolt.tls=true"
+      - "traefik.http.services.passbolt.loadbalancer.server.scheme=https"
+      - "traefik.http.services.passbolt.loadbalancer.server.port=443"
+      - "traefik.http.middlewares.passbolt-stripprefix.stripprefix.prefixes=/portainer"
+      - "traefik.http.routers.passbolt.middlewares=passbolt-stripprefix@docker"
     # ports:
     #   - 80:80
     #   - 443:443
