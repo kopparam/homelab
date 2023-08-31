@@ -7,7 +7,7 @@ networks:
 
 services:
   portainer:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ee:latest
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
