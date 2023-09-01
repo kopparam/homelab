@@ -1,3 +1,4 @@
 /soft-serve/*
 !/soft-serve/config.yaml
 .env
+secrets/
