@@ -7,14 +7,13 @@ networks:
 
 services:
   portainer:
+    # Uncomment to use the free portainer-ce version
+    # image: portainer/portainer-ce:latest
     image: portainer/portainer-ee:latest
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
-    ports:
-      - 8000:8000
-      - 9443:9443
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=PathPrefix(`/portainer`)"

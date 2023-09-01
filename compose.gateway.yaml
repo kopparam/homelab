@@ -31,11 +31,3 @@ networks:
   default:
     name: homelab-network
     external: true
-
-secrets:
-  mysql-root-password:
-    file: ./mysql/secrets/root-password.txt
-  mysql-secrets:
-    file: ./mysql/secrets/secrets.env
-  mysql-nginx-proxy-manager-password:
-    file: ./mysql/secrets/nginx-proxy-manager-password.txt

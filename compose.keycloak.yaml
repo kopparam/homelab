@@ -21,8 +21,6 @@ services:
     secrets:
       - postgres-db-password
       - keycloak-db-password
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-db-password
       - KEYCLOAK_DB_NAME=keycloak
@@ -34,8 +32,6 @@ services:
     image: quay.io/keycloak/keycloak:22.0.1
     depends_on:
       - postgres
-    ports:
-      - 8443:8443
     environment:
       - KC_DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
       - KC_DB_URL_DATABASE=keycloak
