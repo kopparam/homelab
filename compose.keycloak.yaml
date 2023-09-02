@@ -52,7 +52,7 @@ services:
       - "start"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.keycloak.rule=(Host(`secure.kopparam.com`) && (PathPrefix(`/realms`) || PathPrefix(`/resources`) || PathPrefix(`/js`) || Path(`/robots.txt`)) || Host(`secure.lvh.me`))"
+      - "traefik.http.routers.keycloak.rule=(Host(`secure.kopparam.com`) && ( PathPrefix(`/realms`) || PathPrefix(`/resources`) || PathPrefix(`/js`) || Path(`/robots.txt`) ) || Host(`secure.lvh.me`) )"
       - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[0].name=InitForwardedHeader"
       - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[0].type=Set"
       - "traefik.http.middlewares.keycloak-proxy-headers.plugin.htransformation.rules[0].value="

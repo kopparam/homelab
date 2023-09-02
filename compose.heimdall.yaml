@@ -15,9 +15,9 @@ services:
       - TZ=Etc/UTC
     volumes:
       - homelab-heimdall-config:/config
-    ports:
-      - 80:80
-      - 443:443
+    # ports:
+    #   - 80:80
+    #   - 443:443
     restart: unless-stopped
 
 volumes:
