@@ -9,6 +9,7 @@ services:
       - "--providers.docker.exposedByDefault=false"
       - "--serverstransport.insecureskipverify=true"
       - "--accesslog=true"
+      - "--metrics.prometheus=true"
       # - "--accesslog.fields.defaultmode=keep"
       # - "--accesslog.fields.names.ClientUsername=drop"
       # - "--accesslog.fields.headers.defaultmode=keep"
