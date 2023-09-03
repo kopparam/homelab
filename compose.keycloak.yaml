@@ -45,6 +45,7 @@ services:
       - KC_PROXY=reencrypt
       - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
       - KEYCLOAK_ADMIN=admin
+      - KC_METRICS_ENABLED=true
       # - KC_LOG_LEVEL=DEBUG
     volumes:
       - ./keycloak/secrets:/secrets
