@@ -1,0 +1,28 @@
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+local.file "grafana_cloud_token" {
+  filename = env("GRAFANA_CLOUD_TOKEN_PATH")
+  is_secret = true
+}
+
+prometheus.remote_write "hosted_prometheus" {
+  endpoint {
+    url = "https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push"
+
+      basic_auth {
+        username = "1173010"
+        password = local.file.grafana_cloud_token.content
+      } 
+  }
+}
+
+prometheus.scrape "integrations_traefik" {
+  targets = [{
+    __address__ = "traefik:8080",
+  }]
+
+  forward_to = [prometheus.remote_write.hosted_prometheus.receiver]
+}
