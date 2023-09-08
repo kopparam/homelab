@@ -12,6 +12,7 @@ secrets:
 services:
   grafana:
     image: grafana/agent:latest
+    restart: always
     volumes:
       - ./grafana/grafana-agent-flow.river:/etc/agent/config.river
     ports:

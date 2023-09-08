@@ -2,6 +2,7 @@ name: homelab-gateway
 services:
   traefik:
     image: traefik:v2.10
+    restart: always
     command:
       - "--entryPoints.websecure.address=:443"
       - "--api.insecure=true"
