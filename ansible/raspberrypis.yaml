@@ -1,0 +1,4 @@
+rpi5s:
+  hosts:
+    rpi5-[01:02].local:
+      ansible_user: k

@@ -1,0 +1,75 @@
+- name: Install Docker Engine
+  hosts: rpi5s
+  tasks:
+    - name: Uninstall unofficial packages
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - docker-compose
+          - docker-doc
+          - podman-docker
+        state: absent
+      become: true
+
+    - name: Install dependent packages
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: latest
+      become: true
+    
+    - name: Create Keyring directory
+      ansible.builtin.file:
+        state: directory
+        path: /etc/apt/keyrings
+        mode: '0755'
+      become: true
+
+    - name: Get Docker GPG keyring
+      ansible.builtin.shell:
+        cmd: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        creates: /etc/apt/keyrings/docker.gpg
+
+    - name: Make Docker GPG keyring readable
+      ansible.builtin.file:
+        mode: 'a+r'
+        path: /etc/apt/keyrings/docker.gpg
+
+    - name: Add the repository to Apt sources
+      ansible.builtin.shell:
+        cmd: |
+          echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        creates: /etc/apt/sources.list.d/docker.list
+
+    - name: Update apt packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: safe
+      become: true
+
+    - name: Install Docker packages
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+      become: true
+
+    - name: Ensure group "docker" exists
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Add the user 'k' to group 'docker'
+      ansible.builtin.user:
+        name: k
+        group: docker
+      become: true

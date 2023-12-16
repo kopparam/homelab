@@ -1,0 +1,8 @@
+- name: Update packages
+  hosts: rpi5s
+  tasks:
+    - name: Update apt packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: safe
+      become: true
