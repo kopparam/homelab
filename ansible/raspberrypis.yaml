@@ -1,4 +1,6 @@
 rpi5s:
+  vars:
+    ansible_user: k
+    ansible_ssh_private_key_file: /home/kashyap/.ssh/rpi_cluster
   hosts:
-    rpi5-[01:02].local:
-      ansible_user: k
+    rpi5-01.local:

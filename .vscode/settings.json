@@ -1,0 +1,5 @@
+{
+    "ansible.python.interpreterPath": "/home/kashyap/homelab/.venv/bin/python3",
+    "ansible.ansible.path": "/home/kashyap/homelab/.venv/bin/ansible",
+    "ansible.validation.lint.path": "/home/kashyap/homelab/.venv/bin/ansible-lint"
+}
