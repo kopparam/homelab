@@ -1,0 +1,52 @@
+---
+- name: Install containerd using geerlingguy's role
+  hosts: rpi5s
+  become: true
+  roles:
+    - role: geerlingguy.containerd
+      vars:
+        containerd_config_cgroup_driver_systemd: true
+- name: Install required packages
+  hosts: rpi5s
+  become: true
+  tasks:
+    - name: "Install apt packages"
+      ansible.builtin.apt:
+        name:
+          - "apt-transport-https"
+          - "ca-certificates"
+          - "curl"
+          - "gpg"
+        state: present
+    - name: "Add apt key from URL"
+      ansible.builtin.apt_key:
+        url: "https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key"
+        keyring: "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+    - name: "Add apt repository"
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /"
+        filename: "kubernetes.list"
+        state: present
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      become: true
+    - name: Install kubeadm, kubelet, and kubectl
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - "kubeadm"
+        - "kubelet"
+        - "kubectl"
+      become: true
+    - name: Mark packages as held
+      ansible.builtin.dpkg_selections:
+        name: "{{ item }}"
+        selection: hold
+      loop:
+        - "kubeadm"
+        - "kubelet"
+        - "kubectl"
+      become: true
