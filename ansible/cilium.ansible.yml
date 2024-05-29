@@ -1,0 +1,28 @@
+- name: Initialize Kubernetes cluster
+  hosts: rpi5_01
+  become: true
+  vars:
+    cilium_cli_version: "v0.16.7"
+  tasks:
+    - name: Check if cilium CLI is already installed
+      ansible.builtin.command: cilium version --client
+      args:
+        register: cilium_cli_version_out
+        ignore_errors: true
+        changed_when: false
+    - name: Download cilium CLI
+      ansible.builtin.get_url:
+        url: 'https://github.com/cilium/cilium-cli/releases/download/{{ cilium_cli_version }}/cilium-linux-arm64.tar.gz'
+        dest: /tmp/cilium-linux-arm64.tar.gz
+        checksum: 'sha256:https://github.com/cilium/cilium-cli/releases/download/{{ cilium_cli_version }}/cilium-linux-arm64.tar.gz.sha256sum'
+        mode: '0700'
+    - name: Extract cilium CLI
+      ansible.builtin.unarchive:
+        src: /tmp/cilium-linux-arm64.tar.gz
+        dest: /usr/local/bin
+        remote_src: true
+        mode: '0755'
+    - name: Clean up
+      ansible.builtin.file:
+        path: /tmp/cilium-linux-arm64.tar.gz
+        state: absent

@@ -50,3 +50,13 @@
         - "kubelet"
         - "kubectl"
       become: true
+    - name: Turn off swap
+      ansible.builtin.cron:
+        name: "turn off swap"
+        job: "swapoff -a"
+        special_time: reboot
+    - name: Make sure kubelet is started and enabled
+      ansible.builtin.systemd_service:
+        state: started
+        name: kubelet
+        enabled: true
