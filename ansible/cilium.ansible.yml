@@ -1,8 +1,10 @@
 - name: Initialize Kubernetes cluster
   hosts: rpi5_01
+  # ansible_python_interpreter: /home/kashyap/homelab/.venv/bin/python
   become: true
   vars:
     cilium_cli_version: "v0.16.7"
+    cilium_version: "1.15.5"
   tasks:
     - name: Check if cilium CLI is already installed
       ansible.builtin.command: cilium version --client
@@ -21,8 +23,38 @@
         remote_src: true
         mode: '0755'
       when: cilium_cli_version not in cilium_cli_version_out.stdout
-    - name: Clean up
+    - name: Clean up Cilium CLI
       ansible.builtin.file:
         path: /tmp/cilium-linux-arm64.tar.gz
         state: absent
       when: cilium_cli_version not in cilium_cli_version_out.stdout
+    - name: Check if cilium is already installed
+      ansible.builtin.command: cilium status
+      environment:
+        KUBECONFIG: /etc/kubernetes/admin.conf
+      register: cilium_status_out
+    - name: Install Cilium
+      ansible.builtin.command: cilium install --version {{ cilium_version }}
+      environment:
+        KUBECONFIG: /etc/kubernetes/admin.conf
+      register: cilium_install_out
+      when: cilium_status_out.rc != 0
+    - name: Save output to local
+      ansible.builtin.copy:
+        content: "{{ cilium_install_out.stdout }}"
+        dest: ./cilium_install_out.txt
+        owner: k
+        group: k
+        mode: "0600"
+      when: cilium_status_out.rc != 0
+    # - name: Allow pods to be scheduled on control plane
+    #   delegate_to: localhost
+    #   become: false
+    #   environment:
+    #     KUBECONFIG: /home/k/.kube/kupi
+    #   kubernetes.core.k8s_taint:
+    #     name: allow-pods-on-control-plane
+    #     state: absent
+    #     taints:
+    #       - key: "node-role.kubernetes.io/control-plane"
+    #         effect: "NoSchedule"
