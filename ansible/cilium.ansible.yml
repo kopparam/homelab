@@ -33,6 +33,7 @@
       environment:
         KUBECONFIG: /etc/kubernetes/admin.conf
       register: cilium_status_out
+      ignore_errors: true
     - name: Install Cilium
       ansible.builtin.command: cilium install --version {{ cilium_version }}
       environment:
@@ -47,14 +48,17 @@
         group: k
         mode: "0600"
       when: cilium_status_out.rc != 0
-    # - name: Allow pods to be scheduled on control plane
-    #   delegate_to: localhost
-    #   become: false
-    #   environment:
-    #     KUBECONFIG: /home/k/.kube/kupi
-    #   kubernetes.core.k8s_taint:
-    #     name: allow-pods-on-control-plane
-    #     state: absent
-    #     taints:
-    #       - key: "node-role.kubernetes.io/control-plane"
-    #         effect: "NoSchedule"
+- name: Add taint to control plane
+  hosts: localhost
+  tasks:
+    - name: Allow pods to be scheduled on control plane
+      # delegate_to: localhost
+      become: false
+      environment:
+        KUBECONFIG: /home/kashyap/.kube/kupi
+      kubernetes.core.k8s_taint:
+        name: rpi5-01
+        state: absent
+        taints:
+          - key: "node-role.kubernetes.io/control-plane"
+            effect: "NoSchedule"
