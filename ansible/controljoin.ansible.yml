@@ -39,3 +39,62 @@
         private_key: /home/k/.ssh/rpi_cluster_inter
       delegate_to: rpi5_01
       loop: "{{ cert_files }}"
+- name: Join control plane nodes
+  hosts: kupi_control_plane_joiners
+  become: true
+  tasks:
+    - name: Join control plane nodes
+      ansible.builtin.command:
+        argv:
+          - kubeadm
+          - join
+          - kupi.k.it:6443
+          - --token
+          - "{{ lookup('env', 'KUPI_JOIN_TOKEN') }}"
+          - --discovery-token-ca-cert-hash
+          - "{{ lookup('env', 'KUPI_CA_HASH') }}"
+          - --control-plane
+      args:
+        creates: /etc/kubernetes/admin.conf
+      register: kubeadm_join_out
+    - name: Save output to local
+      ansible.builtin.copy:
+        content: "{{ kubeadm_join_out.stdout }}"
+        dest: ./kubeadm_join_out.txt
+        owner: k
+        group: k
+        mode: "0600"
+      when: kubeadm_join_out.rc == 0
+    - name: Create kube directory
+      ansible.builtin.file:
+        path: /home/k/.kube
+        state: directory
+        owner: k
+        group: k
+        mode: "0700"
+    - name: Copy kubeconfig to user's home directory
+      ansible.builtin.copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/k/.kube/config
+        remote_src: true
+        owner: k
+        group: k
+        mode: "0600"
+- name: Add taint to control plane
+  hosts: localhost
+  tasks:
+    - name: Allow pods to be scheduled on control plane
+      become: false
+      environment:
+        KUBECONFIG: /home/kashyap/.kube/kupi
+      kubernetes.core.k8s_taint:
+        name: "{{ item }}"
+        state: absent
+        taints:
+          - key: "node-role.kubernetes.io/control-plane"
+            effect: "NoSchedule"
+      loop:
+        - rpi5-01
+        - rpi5-02
+        - rpi5-03
+      delegate_to: localhost

@@ -1,5 +1,5 @@
 - name: Initialize Kubernetes cluster
-  hosts: rpi5_01
+  hosts: rpi5s
   become: true
   tasks:
     - name: Enable ipv4 packet forwarding across restarts
@@ -26,6 +26,10 @@
         line: '\1 cgroup_memory=1 cgroup_enable=memory'
         state: present
       when: "'cgroup_memory=1 cgroup_enable=memory' not in cmdline_txt_out.stdout"
+- name: Initialize Kubernetes cluster
+  hosts: rpi5_01
+  become: true
+  tasks:
     - name: Run kubeadm init
       ansible.builtin.command: kubeadm init --control-plane-endpoint=kupi.k.it
       args:
