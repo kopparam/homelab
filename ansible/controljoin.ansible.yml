@@ -1,0 +1,41 @@
+- name: Add private keys
+  hosts: rpi5s
+  tasks:
+    - name: Add private key
+      ansible.builtin.copy:
+        src: /home/kashyap/.ssh/rpi_cluster_inter
+        dest: /home/k/.ssh/rpi_cluster_inter
+        owner: k
+        group: k
+        mode: '0400'
+    - name: Add authorized key
+      ansible.posix.authorized_key:
+        user: k
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/p2cyQhjfVyBtdzknLNFaFvOk5B+M++M24ZZCwajQ6"
+        state: present
+- name: Sync certificates
+  hosts: kupi_control_plane_joiners
+  become: true
+  vars:
+    cert_files:
+      - /etc/kubernetes/pki/ca.crt
+      - /etc/kubernetes/pki/ca.key
+      - /etc/kubernetes/pki/sa.key
+      - /etc/kubernetes/pki/sa.pub
+      - /etc/kubernetes/pki/front-proxy-ca.crt
+      - /etc/kubernetes/pki/front-proxy-ca.key
+      - /etc/kubernetes/pki/etcd/ca.crt
+      - /etc/kubernetes/pki/etcd/ca.key
+  tasks:
+    - name: Ensure destination dirs are present
+      ansible.builtin.file:
+        path: "{{ item | dirname }}"
+        state: directory
+      loop: "{{ cert_files }}"
+    - name: Copy certificates
+      ansible.posix.synchronize:
+        src: "{{ item }}"
+        dest: "{{ item }}"
+        private_key: /home/k/.ssh/rpi_cluster_inter
+      delegate_to: rpi5_01
+      loop: "{{ cert_files }}"
