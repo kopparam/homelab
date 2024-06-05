@@ -60,3 +60,25 @@ Portainer is a nice UI to manage the Docker Desktop instance.
 ## [Softserve](https://github.com/charmbracelet/soft-serve) - Git Server
 
 A minimal and beautiful SSH based application to host git repositories.
+
+
+## Kupi
+
+3 node Kubernetes cluster on RaspberryPis 
+
+### SOPS
+
+Add this to the rc file
+
+```
+# SOPS + AGE
+export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
+export HELM_SECRETS_BACKEND=sops
+```
+
+Add the private key to the `.sops/key.txt`
+
+Add secrets using sops
+```
+sops -e plainsecrets.yaml
+```

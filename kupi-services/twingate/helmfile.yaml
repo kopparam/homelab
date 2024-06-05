@@ -1,0 +1,14 @@
+repositories:
+  - name: twingate
+    url: https://twingate.github.io/helm-charts
+
+releases:
+  - name: twingate-kupi-connector-01
+    namespace: twingate
+    chart: twingate/connector
+    createNamespace: true
+    set:
+      - name: connector.network
+        value: "kashyap"
+    secrets:
+      - secrets.yaml
