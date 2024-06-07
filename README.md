@@ -82,3 +82,15 @@ Add secrets using sops
 ```
 sops -e plainsecrets.yaml
 ```
+
+## Grafana
+
+Configure Application Instrumentation
+After the Helm chart is deployed, you will need to configure your application instrumentation to send telemetry data to Grafana Alloy using one of these addresses:
+
+OTLP/gRPC endpoint: http://grafana-k8s-monitoring-grafana-agent.lgtm.svc.cluster.local:4317
+
+OTLP/HTTP endpoint: http://grafana-k8s-monitoring-grafana-agent.lgtm.svc.cluster.local:4318
+
+Zipkin endpoint: grafana-k8s-monitoring-grafana-agent.lgtm.svc.cluster.local:9411
+

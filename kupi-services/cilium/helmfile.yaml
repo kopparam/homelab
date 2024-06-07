@@ -1,0 +1,13 @@
+repositories:
+  - name: cilium
+    url: https://helm.cilium.io/
+
+releases:
+  - name: cilium
+    namespace: kube-system
+    chart: cilium/cilium
+    set:
+      - name: connector.network
+        value: "kashyap"
+    secrets:
+      - secrets.yaml
