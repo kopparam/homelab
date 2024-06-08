@@ -29,7 +29,7 @@ receivers:
   zipkin:
     enabled: true
 opencost:
-  enabled: true
+  enabled: false
   opencost:
     exporter:
       defaultClusterId: kupi

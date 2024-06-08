@@ -1,0 +1,20 @@
+repositories:
+  - name: rook-release
+    url: https://charts.rook.io/release
+
+releases:
+  - name: rook-ceph
+    namespace: rook-ceph
+    chart: rook-release/rook-ceph
+    createNamespace: true
+    values:
+      - rook-ceph.yaml
+    wait: true
+  - name: rook-ceph-cluster
+    namespace: rook-ceph-cluster
+    chart: rook-release/rook-ceph-cluster
+    createNamespace: true
+    values:
+      - rook-ceph-cluster.yaml
+    needs:
+      - rook-ceph/rook-ceph

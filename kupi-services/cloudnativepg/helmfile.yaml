@@ -1,0 +1,18 @@
+repositories:
+  - name: cnpg
+    url: https://cloudnative-pg.github.io/charts
+
+releases:
+  - name: cnpg
+    namespace: cnpg-system
+    chart: cnpg/cloudnative-pg
+    createNamespace: true
+  - name: cnpg-db-cluster
+    namespace: database
+    chart: cnpg/cluster
+    createNamespace: true
+    set:
+      - name: cluster.monitoring.enabled
+        value: "true"
+    needs:
+      - cnpg
