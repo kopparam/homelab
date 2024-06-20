@@ -13,6 +13,9 @@ metrics:
     enabled: true
   node-exporter:
     enabled: true
+    metricsTuning:
+      includeMetrics:
+        - "node_hwmon.*"
 logs:
   enabled: true
   pod_logs:

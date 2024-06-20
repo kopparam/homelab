@@ -7,13 +7,8 @@ releases:
     namespace: grafana
     chart: grafana/k8s-monitoring
     createNamespace: true
+    version: 1.0.12
     values:
       - values.yaml
     secrets:
       - secrets.yaml
-
-
-# helm repo add grafana https://grafana.github.io/helm-charts &&
-#   helm repo update &&
-#   helm upgrade --install --atomic --timeout 300s grafana-k8s-monitoring grafana/k8s-monitoring \
-#     --namespace "lgtm" --create-namespace --values - <<EOF

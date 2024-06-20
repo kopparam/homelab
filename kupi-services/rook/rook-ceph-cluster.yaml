@@ -388,7 +388,8 @@ cephClusterSpec:
     #     deviceFilter: "^sd."
     nodes:
       - name: "rpi5-02"
-        useAllDevices: true
+        devices:
+          - name: "sda" 
         # devices:
         #   - name: "/dev/sda1"
         #   - name: "/dev/sda2"
