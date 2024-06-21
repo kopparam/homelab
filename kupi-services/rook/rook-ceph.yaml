@@ -572,7 +572,7 @@ csi:
   nfsAttachRequired: true
 
 # -- Enable discovery daemon
-enableDiscoveryDaemon: false
+enableDiscoveryDaemon: true
 # -- Set the discovery daemon device discovery interval (default to 60m)
 discoveryDaemonInterval: 60m
 
@@ -606,10 +606,10 @@ discover:
   #     effect: NoSchedule
   # -- The node labels for affinity of `discover-agent` [^1]
   nodeAffinity:
-  #   key1=value1,value2; key2=value3
-  #
-  #   or
-  #
+    #   key1=value1,value2; key2=value3
+    #
+    #   or
+    #
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
         - matchExpressions:

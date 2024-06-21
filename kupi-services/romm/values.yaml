@@ -1,0 +1,26 @@
+mariadb:
+  enabled: false
+redis:
+  enabled: false
+persistence:
+  database:
+    volumeClaimSpec:
+      storageClassName: ceph-filesystem
+  logs:
+    volumeClaimSpec:
+      storageClassName: ceph-filesystem
+  resources:
+    volumeClaimSpec:
+      storageClassName: ceph-filesystem
+nodeSelector:
+  role: storage-node
+mediaVolume:
+  enabled: true
+  name: library
+  readOnly: false
+  volumeSpec:
+    accessModes:
+      - ReadWriteOnce
+    capacity:
+      storage: 1Gi
+    storageClassName: ceph-filesystem

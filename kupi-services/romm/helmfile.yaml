@@ -1,0 +1,19 @@
+repositories:
+  # - name: crystalnet
+  #   url: https://charts.crystalnet.org
+  # - name: crystalnet
+  #   url: harbor.crystalnet.org
+  #   oci: true
+
+releases:
+  - name: romm
+    namespace: romm
+    # chart: oci://harbor.crystalnet.org/charts/romm
+    chart: /home/kashyap/helm-romm/chart
+    createNamespace: true
+    # version: 0.2.20
+    values:
+      - values.yaml
+    secrets:
+      - secrets.yaml
+    wait: true
