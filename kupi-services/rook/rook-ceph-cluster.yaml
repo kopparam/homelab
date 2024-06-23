@@ -387,9 +387,15 @@ cephClusterSpec:
     #   - name: "172.17.4.301"
     #     deviceFilter: "^sd."
     nodes:
+      - name: "rpi5-01"
+        devices:
+          - name: "nvme0n1"
       - name: "rpi5-02"
         devices:
-          - name: "sda"
+          - name: "nvme0n1"
+      - name: "rpi5-03"
+        devices:
+          - name: "nvme0n1"
         # devices:
         #   - name: "/dev/sda1"
         #   - name: "/dev/sda2"
@@ -525,19 +531,22 @@ cephBlockPools: []
 # -- A list of CephFileSystem configurations to deploy
 # @default -- See [below](#ceph-file-systems)
 cephFileSystems:
-  - name: ceph-filesystem
+  - name: cephfs-nvme-ha
     # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#filesystem-settings for available configuration
     spec:
       metadataPool:
         replicated:
-          size: 1
+          size: 3
       dataPools:
-        - failureDomain: host
+        - name: default
           replicated:
-            size: 1
-          # erasureCoded:
-          #   dataChunks: 2
-          #   codingChunks: 1
+            size: 3
+        - failureDomain: host
+          # replicated:
+          #   size: 1
+          erasureCoded:
+            dataChunks: 2
+            codingChunks: 1
           # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#pools
           name: data0
       metadataServer:
@@ -553,7 +562,7 @@ cephFileSystems:
     storageClass:
       enabled: true
       isDefault: false
-      name: ceph-filesystem
+      name: cephfs-nvme-ha
       # (Optional) specify a data pool to use, must be the name of one of the data pools above, 'data0' by default
       pool: data0
       reclaimPolicy: Delete
@@ -573,7 +582,6 @@ cephFileSystems:
         # will set default as `ext4`. Note that `xfs` is not recommended due to potential deadlock
         # in hyperconverged settings where the volume is mounted on the same node as the osds.
         csi.storage.k8s.io/fstype: ext4
-
 # -- Settings for the filesystem snapshot class
 # @default -- See [CephFS Snapshots](../Storage-Configuration/Ceph-CSI/ceph-csi-snapshot.md#cephfs-snapshots)
 cephFileSystemVolumeSnapshotClass:
@@ -601,20 +609,20 @@ cephBlockPoolsVolumeSnapshotClass:
 # -- A list of CephObjectStore configurations to deploy
 # @default -- See [below](#ceph-object-stores)
 cephObjectStores:
-  - name: ceph-objectstore
+  - name: ceph-objectstore-nvme-ha
     # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
     spec:
       metadataPool:
         failureDomain: host
         replicated:
-          size: 1
+          size: 2
       dataPool:
         failureDomain: host
-        replicated:
-          size: 1
-        # erasureCoded:
-        #   dataChunks: 2
-        #   codingChunks: 1
+        # replicated:
+        #   size: 1
+        erasureCoded:
+          dataChunks: 2
+          codingChunks: 1
       preservePoolsOnDelete: true
       gateway:
         port: 80
@@ -630,7 +638,7 @@ cephObjectStores:
         priorityClassName: system-cluster-critical
     storageClass:
       enabled: true
-      name: ceph-bucket
+      name: ceph-bucket-nvme-ha
       reclaimPolicy: Delete
       volumeBindingMode: "Immediate"
       # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Object-Storage-RGW/ceph-object-bucket-claim.md#storageclass for available configuration

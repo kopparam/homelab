@@ -14,5 +14,7 @@
             labels:
               role: "storage-node"
       loop:
+        - rpi5-01
         - rpi5-02
+        - rpi5-03
       delegate_to: localhost
