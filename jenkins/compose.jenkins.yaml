@@ -15,24 +15,24 @@ services:
       - "2376:2376"
     command: --storage-driver overlay2
 
-jenkins-blueocean:
-  image: myjenkins-blueocean:2.452.3-1
-  container_name: jenkins-blueocean
-  restart: on-failure
-  depends_on:
-    - jenkins-docker
-  networks:
-    - jenkins-network
-  environment:
-    - DOCKER_HOST=tcp://jenkins-docker:2376
-    - DOCKER_CERT_PATH=/certs/client
-    - DOCKER_TLS_VERIFY=1
-  ports:
-    - "8080:8080"
-    - "50000:50000"
-  volumes:
-    - jenkins-data:/var/jenkins_home
-    - jenkins-docker-certs:/certs/client:ro
+  jenkins-blueocean:
+    image: myjenkins-blueocean:2.452.3-1
+    container_name: jenkins-blueocean
+    restart: on-failure
+    depends_on:
+      - jenkins-docker
+    networks:
+      - jenkins-network
+    environment:
+      - DOCKER_HOST=tcp://jenkins-docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
 
 networks:
   jenkins-network:
