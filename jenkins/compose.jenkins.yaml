@@ -5,7 +5,9 @@ services:
     container_name: jenkins-docker
     privileged: true
     networks:
-      - jenkins-network
+      jenkins-network:
+        aliases:
+          - docker
     environment:
       DOCKER_TLS_CERTDIR: "/certs"
     volumes:
@@ -24,7 +26,7 @@ services:
     networks:
       - jenkins-network
     environment:
-      - DOCKER_HOST=tcp://jenkins-docker:2376
+      - DOCKER_HOST=tcp://docker:2376
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_VERIFY=1
     ports:
