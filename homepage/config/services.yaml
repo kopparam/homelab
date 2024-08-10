@@ -4,6 +4,11 @@
         href: https://192.168.18.111:9443
         description: Portainer
         icon: portainer.svg
+        widget:
+          type: portainer
+          url: https://192.168.18.111:9443
+          env: 2
+          key: {{HOMEPAGE_VAR_PORTAINER_API_TOKEN}}
     - Jenkins:
         href: http://192.168.18.111:8085
         description: CI
