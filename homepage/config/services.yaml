@@ -3,6 +3,7 @@
     - Portainer:
         href: https://192.168.18.111:9443
         description: Portainer
+        icon: portainer.svg
 
 - Public:
     - Portfolio:
