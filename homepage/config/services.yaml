@@ -4,8 +4,29 @@
         href: https://192.168.18.111:9443
         description: Portainer
         icon: portainer.svg
+    - Jenkins:
+        href: http://192.168.18.111:8085
+        description: CI
+        icon: jenkins.svg
+    - Traefik:
+        href: http://192.168.18.111:8080
 
 - Public:
     - Portfolio:
         href: https://kkoppa.com/
         description: Personal Website
+    - Family Tree:
+        href: https://family.kopparam.com
+        description: D3 tree of my family
+    - Home Assistant:
+        href: https://ha.kopparam.com
+        description: Home automation hub
+        icon: home-assistant.svg
+    - Next Cloud:
+        href: https://nc.kopparam.com
+        description: Private Cloud
+        icon: nextcloud.svg
+    - Romm:
+        href: https://romm.kopparam.com
+        description: Retro Games
+        icon: romm.svg
