@@ -10,7 +10,8 @@
         icon: jenkins.svg
     - Traefik:
         href: http://192.168.18.111:8080
-
+        description: Proxy Dashboard
+        icon: traefik.svg
 - Public:
     - Portfolio:
         href: https://kkoppa.com/
