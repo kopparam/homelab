@@ -7,9 +7,12 @@ services:
       - 3000:3000
     volumes:
       - ./config:/app/config
+      - ./images:/app/images
+      - ./logos:/app/icons
     environment:
       PUID: 1000
       PGID: 100
+    restart: unless-stopped
 
 networks:
   default:
