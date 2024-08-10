@@ -12,6 +12,10 @@
         href: http://192.168.18.111:8080
         description: Proxy Dashboard
         icon: traefik.svg
+    - Pi-Hole:
+        href: http://192.168.18.82:1080/admin
+        description: Network wide ad blocking
+        icon: pi-hole.svg
 - Public:
     - Portfolio:
         href: https://kkoppa.com/
