@@ -16,6 +16,11 @@
         href: http://192.168.18.82:1080/admin
         description: Network wide ad blocking
         icon: pi-hole.svg
+        widget:
+          type: pihole
+          url: http://192.168.18.82:1080
+          version: 5
+          key: {{HOMEPAGE_VAR_PIHOLE_API_TOKEN}}
 - Public:
     - Portfolio:
         href: https://kkoppa.com/
