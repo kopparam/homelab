@@ -17,6 +17,9 @@
         href: http://192.168.18.111:8080
         description: Proxy Dashboard
         icon: traefik.svg
+        widget:
+            type: traefik
+            url: http://192.168.18.111:8080
     - Pi-Hole:
         href: http://192.168.18.82:1080/admin
         description: Network wide ad blocking
