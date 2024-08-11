@@ -12,6 +12,9 @@ services:
     environment:
       PUID: 1000
       PGID: 100
+      HOMEPAGE_VAR_PIHOLE_API_TOKEN: ${HOMEPAGE_VAR_PIHOLE_API_TOKEN}
+      HOMEPAGE_VAR_PORTAINER_API_TOKEN: ${HOMEPAGE_VAR_PORTAINER_API_TOKEN}
+      LOG_LEVEL: ${LOG_LEVEL}
     restart: unless-stopped
 
 networks:
