@@ -48,3 +48,8 @@
         href: https://romm.kopparam.com
         description: Retro Games
         icon: romm.svg
+        widget:
+            type: romm
+            url: https://romm.kopparam.com
+            username: {{HOMEPAGE_VAR_ROMM_USERNAME}}
+            password: {{HOMEPAGE_VAR_ROMM_PASSWORD}}
