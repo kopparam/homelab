@@ -44,6 +44,11 @@
         href: https://nc.kopparam.com
         description: Private Cloud
         icon: nextcloud.svg
+        widget:
+            type: nextcloud
+            url: https://nc.kopparam.com
+            username: {{HOMEPAGE_VAR_NC_USERNAME}}
+            password: {{HOMEPAGE_VAR_NC_PASSWORD}}
     - Romm:
         href: https://romm.kopparam.com
         description: Retro Games
