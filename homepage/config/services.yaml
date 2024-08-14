@@ -30,12 +30,6 @@
           version: 5
           key: {{HOMEPAGE_VAR_PIHOLE_API_TOKEN}}
 - Public:
-    - Portfolio:
-        href: https://kkoppa.com/
-        description: Personal Website
-    - Family Tree:
-        href: https://family.kopparam.com
-        description: D3 tree of my family
     - Home Assistant:
         href: https://ha.kopparam.com
         description: Home automation hub

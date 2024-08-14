@@ -1,7 +1,8 @@
 - Dashboards:
-    - Grafana:
+    - Climate:
         - href: https://kopparam.grafana.net/d/ecf17291-c76b-48b9-9052-8a9628b30e3c/climate?var-location=home
           icon: mdi-thermometer-water
+    - Raspberry Pis:
         - href: https://kopparam.grafana.net/d/raspberrypinode-overview/raspberry-pi-overview?var-datasource=grafanacloud-prom&var-job=$__all&var-loki_datasource=grafanacloud-logs&var-instance=rpi5-03
           icon: raspberrypi.svg
 
