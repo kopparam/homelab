@@ -8,7 +8,7 @@ services:
     environment:
       INVIDIOUS_CONFIG_FILE: /config/config.yml
     volumes:
-      - /home/k/invidious/config.yaml:/config/config.yml
+      - /home/k/invidious/config.yaml:/config
     healthcheck:
       test: wget -nv --tries=1 --spider http://127.0.0.1:3000/api/v1/trending || exit 1
       interval: 30s
