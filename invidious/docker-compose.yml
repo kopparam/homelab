@@ -25,7 +25,7 @@ services:
       - "traefik.http.routers.invidious.rule=Host(`invidious.kkoppa.com`)"
       - "traefik.http.routers.invidious.entrypoints=websecure"
       - "traefik.http.routers.invidious.tls.certresolver=namecheapresolver"
-      - "traefik.http.services.invidious.loadbalancer.server.port=3001"
+      - "traefik.http.services.invidious.loadbalancer.server.port=3000"
 
   invidious-db:
     image: docker.io/library/postgres:14
