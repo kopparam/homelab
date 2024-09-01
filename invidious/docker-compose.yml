@@ -21,10 +21,9 @@ services:
     depends_on:
       - invidious-db
     labels:
-      - "traefik.enable=false"
-      - "traefik.http.routers.invidious.rule=Host(`invidious.kkoppa.com`)"
-      - "traefik.http.routers.invidious.entrypoints=websecure"
-      - "traefik.http.routers.invidious.tls.certresolver=namecheapresolver"
+      - "traefik.enable=true"
+      - "traefik.http.routers.invidious.rule=Host(`192.168.18.111`)"
+      - "traefik.http.routers.invidious.entrypoints=internalsecure"
       - "traefik.http.services.invidious.loadbalancer.server.port=3000"
 
   invidious-db:
