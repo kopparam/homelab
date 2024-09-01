@@ -21,7 +21,7 @@ services:
     depends_on:
       - invidious-db
     labels:
-      - "traefik.enable=true"
+      - "traefik.enable=false"
       - "traefik.http.routers.invidious.rule=Host(`invidious.kkoppa.com`)"
       - "traefik.http.routers.invidious.entrypoints=websecure"
       - "traefik.http.routers.invidious.tls.certresolver=namecheapresolver"
