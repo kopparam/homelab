@@ -22,7 +22,7 @@ services:
       - invidious-db
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.invidious.rule=Host(`192.168.18.111`)"
+      - "traefik.http.routers.invidious.rule=Host(`invidious.k.it`)"
       - "traefik.http.routers.invidious.entrypoints=internalsecure"
       - "traefik.http.services.invidious.loadbalancer.server.port=3000"
 
