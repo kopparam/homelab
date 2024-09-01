@@ -21,7 +21,7 @@ services:
     depends_on:
       - invidious-db
     labels:
-      - "traefik.enable=true"
+      - "traefik.enable=false"
       - "traefik.http.routers.invidious.rule=Host(`invidious.k.it`)"
       - "traefik.http.routers.invidious.entrypoints=internalsecure"
       - "traefik.http.services.invidious.loadbalancer.server.port=3000"
