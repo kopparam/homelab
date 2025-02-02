@@ -23,9 +23,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homepage.rule=Host(`ihomepage.kopparam.com`)"
-      - "traefik.http.services.mywebsite.loadbalancer.server.port=3000"
-      - "traefik.http.routers.mywebsite.entrypoints=web"
-      - "traefik.http.routers.mywebsite.tls.certresolver=kopparamdnsresolver"
+      - "traefik.http.services.homepage.loadbalancer.server.port=3000"
+      - "traefik.http.routers.homepage.entrypoints=web"
+      - "traefik.http.routers.homepage.tls.certresolver=kopparamdnsresolver"
 
 networks:
   default:
