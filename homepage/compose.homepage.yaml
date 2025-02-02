@@ -20,6 +20,12 @@ services:
       HOMEPAGE_VAR_NC_USERNAME: ${HOMEPAGE_VAR_NC_USERNAME}
       LOG_LEVEL: ${LOG_LEVEL}
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homepage.rule=Host(`ihomepage.kopparam.com`)"
+      - "traefik.http.services.mywebsite.loadbalancer.server.port=3000"
+      - "traefik.http.routers.mywebsite.entrypoints=web"
+      - "traefik.http.routers.mywebsite.tls.certresolver=kopparamdnsresolver"
 
 networks:
   default:
