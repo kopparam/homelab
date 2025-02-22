@@ -22,10 +22,10 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.homepage.rule=Host(`ihomepage.kopparam.com`)"
-      - "traefik.http.services.homepage.loadbalancer.server.port=3000"
-      - "traefik.http.routers.homepage.entrypoints=websecure"
-      - "traefik.http.routers.homepage.tls.certresolver=kopparamdnsresolver"
+      - "traefik.http.routers.ihomepage.rule=Host(`ihomepage.kopparam.com`)"
+      - "traefik.http.services.ihomepage.loadbalancer.server.port=3000"
+      - "traefik.http.routers.ihomepage.entrypoints=websecure"
+      - "traefik.http.routers.ihomepage.tls.certresolver=kopparamdnsresolver"
 
 networks:
   default:
