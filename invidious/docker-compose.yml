@@ -1,7 +1,7 @@
 services:
 
   invidious:
-    image: quay.io/invidious/invidious:master-arm64
+    image: quay.io/invidious/invidious:latest-arm64
     restart: unless-stopped
     ports:
       - "3001:3000"
