@@ -1,0 +1,74 @@
+#
+# Please consult the `Deployment` section in the docs if you want to deploy
+# this. You *need* to keep this nginx service, even if you have your own,
+# otherwise the static files will not be served correctly! If you do remove
+# it, configure yours similarly to what's in config/nginx.conf
+# Also take a look at the "Static files" section in the .env file
+
+services:
+  web:
+    env_file:
+      - ./config/prod.env
+      - ./config/homelab.env
+    volumes:
+      - wger-static:/home/wger/static
+      - wger-media:/home/wger/media
+
+
+  nginx:
+    ports:
+      - "8097:80"
+    volumes:
+      - wger-static:/wger/static:ro
+      - wger-media:/wger/media:ro
+
+  db:
+    volumes:
+      - wger-postgres-data:/var/lib/postgresql/data/
+
+  cache:
+
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf
+      - wger-redis-data:/data
+
+
+    # You probably want to limit the memory usage of the cache, otherwise it might
+    # hog all the available memory. Remove or change according to your needs.
+    #mem_limit: 5gb
+
+  celery_worker:
+    env_file:
+      - ./config/prod.env
+      - ./config/homelab.env
+    volumes:
+      - wger-media:/home/wger/media
+
+  celery_beat:
+    volumes:
+      - wger-celery-beat:/home/wger/beat/
+    env_file:
+      - ./config/prod.env
+      - ./config/homelab.env
+
+volumes:
+  wger-postgres-data:
+    external: true
+  wger-celery-beat:
+    external: true
+  wger-redis-data:
+    external: true
+
+  # Heads up, if you remove these volumes and use folders directly you need to chown them
+  # to the UID and GID 1000 even if it doesn't exist on your system. Also, they should
+  # be readable by everyone.
+  wger-media:
+    external: true
+  wger-static:
+    external: true
+
+networks:
+  default:
+    name: homelab-network
+    external: true
+
