@@ -9,8 +9,6 @@ services:
 
 
   nginx:
-    ports:
-      - "8097:8097"
     volumes:
       - wger-static:/wger/static:ro
       - wger-media:/wger/media:ro

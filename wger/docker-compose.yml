@@ -30,6 +30,7 @@ services:
       - static:/wger/static:ro
       - media:/wger/media:ro
     ports:
+      # This is changed directly here instead of override file since port 80:80 mapping causes conflicts
       - "8097:8097"
     healthcheck:
       test: service nginx status
