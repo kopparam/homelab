@@ -1,7 +1,9 @@
 services:
   web:
     environment:
-     - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
+      - SECRET_KEY=${SECRET_KEY:?err}
+      - SIGNING_KEY=${SIGNING_KEY:?err}
     env_file:
       - ./config/prod.env
       - ./config/homelab.env
@@ -38,7 +40,9 @@ services:
 
   celery_worker:
     environment:
-     - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
+      - SECRET_KEY=${SECRET_KEY:?err}
+      - SIGNING_KEY=${SIGNING_KEY:?err}
     env_file:
       - ./config/prod.env
       - ./config/homelab.env
@@ -47,7 +51,9 @@ services:
 
   celery_beat:
     environment:
-     - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
+      - SECRET_KEY=${SECRET_KEY:?err}
+      - SIGNING_KEY=${SIGNING_KEY:?err}
     volumes:
       - wger-celery-beat:/home/wger/beat/
     env_file:
