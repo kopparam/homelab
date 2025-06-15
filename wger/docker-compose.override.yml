@@ -46,6 +46,8 @@ services:
       - wger-media:/home/wger/media
 
   celery_beat:
+    environment:
+     - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
     volumes:
       - wger-celery-beat:/home/wger/beat/
     env_file:
