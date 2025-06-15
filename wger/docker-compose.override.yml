@@ -12,6 +12,11 @@ services:
     volumes:
       - wger-static:/wger/static:ro
       - wger-media:/wger/media:ro
+    labels:
+      - "traefik.http.services.wger.loadbalancer.server.port=8097"
+      - "traefik.http.routers.wger.rule=Host(`wger.kopparam.com`)"
+      - "traefik.http.routers.wger.entrypoints=websecure"
+      - "traefik.http.routers.wger.tls.certresolver=kopparamdnsresolver"
 
   db:
     volumes:
