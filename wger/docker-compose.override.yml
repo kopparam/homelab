@@ -1,5 +1,7 @@
 services:
   web:
+    environment:
+     - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:?err}
     env_file:
       - ./config/prod.env
       - ./config/homelab.env
