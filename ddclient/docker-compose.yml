@@ -1,0 +1,14 @@
+services:
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Singapore
+    volumes:
+      - ./config:/config
+    restart: unless-stopped
+networks:
+  default:
+    name: homelab-network
+    external: true
