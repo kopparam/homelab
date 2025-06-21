@@ -1,14 +1,23 @@
 services:
-  ddclient:
+  cf-ddclient:
     image: lscr.io/linuxserver/ddclient:latest
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Singapore
       - CF_API_KEY=${CF_API_KEY:?err}
-      - CF_LOGIN=${CF_LOGIN:?err}
     volumes:
-      - ./config:/config
+      - ./cf-config:/config
+    restart: unless-stopped
+  namecheap-ddclient:
+    image: lscr.io/linuxserver/ddclient:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Singapore
+      - NAMECHEAP_GENERATED_PASSWORD=${NAMECHEAP_GENERATED_PASSWORD:?err}
+    volumes:
+      - ./namecheap-config:/config
     restart: unless-stopped
 networks:
   default:
