@@ -5,6 +5,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Singapore
+      - CF_API_KEY=${CF_API_KEY:?err}
     volumes:
       - ./config:/config
     restart: unless-stopped
