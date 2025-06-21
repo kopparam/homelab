@@ -6,6 +6,7 @@ services:
       - PGID=1000
       - TZ=Asia/Singapore
       - CF_API_KEY=${CF_API_KEY:?err}
+      - CF_LOGIN=${CF_LOGIN:?err}
     volumes:
       - ./config:/config
     restart: unless-stopped
