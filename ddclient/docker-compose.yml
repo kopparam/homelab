@@ -1,5 +1,5 @@
 services:
-  cf-ddclient:
+  cf:
     image: lscr.io/linuxserver/ddclient:latest
     environment:
       - PUID=1000
@@ -9,7 +9,7 @@ services:
     volumes:
       - ./cf-config:/config
     restart: unless-stopped
-  namecheap-ddclient:
+  namecheap:
     image: lscr.io/linuxserver/ddclient:latest
     environment:
       - PUID=1000
