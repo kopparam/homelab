@@ -1,19 +1,6 @@
-rpi5s:
+rpi:
   vars:
     ansible_user: k
-    ansible_ssh_private_key_file: /home/kashyap/.ssh/rpi_cluster
+    ansible_ssh_private_key_file: ~/.ssh/rpi
   hosts:
-    c[1:3]-kupi.k.it:
-kupi_control_plane_joiners:
-  vars:
-    ansible_user: k
-    ansible_ssh_private_key_file: /home/kashyap/.ssh/rpi_cluster
-  hosts:
-    c[1:2]-kupi.k.it:
-ungrouped:
-  vars:
-    ansible_user: k
-    ansible_ssh_private_key_file: /home/kashyap/.ssh/rpi_cluster
-  hosts:
-    rpi5_01:
-      ansible_host: c1-kupi.k.it
+    rpi.k.it:

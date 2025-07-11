@@ -1,5 +1,5 @@
 - name: Update packages
-  hosts: rpi5s
+  hosts: rpi
   tasks:
     - name: Update apt packages
       ansible.builtin.apt:
