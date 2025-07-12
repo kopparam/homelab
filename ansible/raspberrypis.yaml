@@ -1,6 +1,0 @@
-rpi:
-  vars:
-    ansible_user: k
-    ansible_ssh_private_key_file: ~/.ssh/rpi
-  hosts:
-    rpi.k.it:

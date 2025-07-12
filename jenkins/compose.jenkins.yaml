@@ -16,7 +16,7 @@ services:
       - "2376:2376"
     command: --storage-driver overlay2
 
-  jenkins-blueocean:
+  jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
     restart: on-failure

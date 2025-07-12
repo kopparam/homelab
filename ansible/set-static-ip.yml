@@ -1,0 +1,31 @@
+---
+- name: Configure Static IP for ipi
+  hosts: ipi
+  become: true
+  tasks:
+    - name: Ensure NetworkManager is running
+      ansible.builtin.service:
+        name: NetworkManager
+        state: started
+        enabled: true
+
+    - name: Configure static IP for eth0
+      community.general.nmcli:
+        conn_name: 'static-eth0'
+        ifname: eth0
+        type: ethernet
+        ip4:
+          - 192.168.18.82/24
+        gw4: 192.168.18.1
+        dns4:
+          - 192.168.18.82
+          - 1.1.1.1
+        method4: manual
+        state: present
+      notify: Restart NetworkManager
+
+  handlers:
+    - name: Restart NetworkManager
+      ansible.builtin.service:
+        name: NetworkManager
+        state: restarted
