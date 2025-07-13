@@ -17,7 +17,8 @@ services:
     command: --storage-driver overlay2
 
   jenkins:
-    image: myjenkins-blueocean:2.518-jdk21
+    # image: myjenkins-blueocean:2.518-jdk21
+    build: .
     container_name: jenkins
     restart: on-failure
     depends_on:
