@@ -1,3 +1,4 @@
+# TODO: Move from Portainer yaml to git
 name: homelab-gateway
 services:
   traefik:

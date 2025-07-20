@@ -1,3 +1,4 @@
+# TODO: Deploy on dockerpi
 version: "3.9"
 name: homelab-monitoring
 networks:
