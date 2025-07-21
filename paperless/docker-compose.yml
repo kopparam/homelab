@@ -3,7 +3,7 @@ services:
     image: docker.io/library/redis:8
     restart: unless-stopped
     volumes:
-      - redisdata:/data
+      - paperless-redisdata:/data
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
@@ -24,7 +24,6 @@ services:
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
-      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?err}
   gotenberg:
     image: docker.io/gotenberg/gotenberg:8.20
     restart: unless-stopped
