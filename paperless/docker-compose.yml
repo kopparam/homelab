@@ -18,12 +18,15 @@ services:
       - paperless-media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
-    env_file: stack.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+      PAPERLESS_OCR_LANGUAGE: eng
+      PAPERLESS_TIME_ZONE: "Asia/Singapore"
+      PAPERLESS_URL: https://paperless.kopparam.com
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?err}
   gotenberg:
     image: docker.io/gotenberg/gotenberg:8.20
     restart: unless-stopped
