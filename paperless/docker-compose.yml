@@ -13,6 +13,12 @@ services:
       - tika
     ports:
       - "8000:8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.paperless.loadbalancer.server.port=8000"
+      - "traefik.http.routers.paperless.rule=Host(`paperless.kopparam.com`)"
+      - "traefik.http.routers.paperless.entrypoints=websecure"
+      - "traefik.http.routers.paperless.tls.certresolver=kopparamdnsresolver"
     volumes:
       - paperless-data:/usr/src/paperless/data
       - paperless-media:/usr/src/paperless/media
