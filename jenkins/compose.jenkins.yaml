@@ -48,4 +48,6 @@ networks:
 
 volumes:
   jenkins-docker-certs-nfs:
+    name: jenkins-docker-certs-nfs
   jenkins-data-nfs:
+    name: jenkins-data-nfs
