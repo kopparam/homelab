@@ -20,8 +20,8 @@ services:
       - "traefik.http.routers.paperless.entrypoints=websecure"
       - "traefik.http.routers.paperless.tls.certresolver=kopparamdnsresolver"
     volumes:
-      - paperless-data:/usr/src/paperless/data
-      - paperless-media:/usr/src/paperless/media
+      - paperless-data-nfs:/usr/src/paperless/data
+      - paperless-media-nfs:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
     environment:
@@ -47,9 +47,9 @@ services:
     restart: unless-stopped
 
 volumes:
-  paperless-data:
+  paperless-data-nfs:
     external: true
-  paperless-media:
+  paperless-media-nfs:
     external: true
   paperless-redisdata:
     external: true
