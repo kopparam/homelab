@@ -3,7 +3,7 @@ services:
     image: docker.io/library/redis:8
     restart: unless-stopped
     volumes:
-      - paperless-redisdata:/data
+      - paperless-redisdata-nfs:/data
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
@@ -51,7 +51,7 @@ volumes:
     external: true
   paperless-media-nfs:
     external: true
-  paperless-redisdata:
+  paperless-redisdata-nfs:
     external: true
 
 networks:
