@@ -21,6 +21,7 @@ services:
       - "traefik.http.routers.wger.rule=Host(`wger.kopparam.com`)"
       - "traefik.http.routers.wger.entrypoints=websecure"
       - "traefik.http.routers.wger.tls.certresolver=kopparamdnsresolver"
+      - "traefik.http.middlewares.wgernobots.headers.customresponseheaders.X-Robots-Tag=none"
 
   db:
     volumes:
