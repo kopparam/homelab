@@ -6,12 +6,10 @@ services:
       - SIGNING_KEY=${SIGNING_KEY:?err}
       - DJANGO_DEBUG=${DJANGO_DEBUG:?err}
     env_file:
-      - ./config/prod.env
-      - ./config/homelab.env
+      - stack.env
     volumes:
       - wger-static:/home/wger/static
       - wger-media:/home/wger/media
-
 
   nginx:
     volumes:
@@ -29,11 +27,9 @@ services:
       - wger-postgres-data:/var/lib/postgresql/data/
 
   cache:
-
     volumes:
       - ./config/redis.conf:/usr/local/etc/redis/redis.conf
       - wger-redis-data:/data
-
 
     # You probably want to limit the memory usage of the cache, otherwise it might
     # hog all the available memory. Remove or change according to your needs.
@@ -46,8 +42,7 @@ services:
       - SIGNING_KEY=${SIGNING_KEY:?err}
       - DJANGO_DEBUG=${DJANGO_DEBUG:?err}
     env_file:
-      - ./config/prod.env
-      - ./config/homelab.env
+      - stack.env
     volumes:
       - wger-media:/home/wger/media
 
@@ -60,8 +55,7 @@ services:
     volumes:
       - wger-celery-beat:/home/wger/beat/
     env_file:
-      - ./config/prod.env
-      - ./config/homelab.env
+      - stack.env
 
 volumes:
   wger-postgres-data:
