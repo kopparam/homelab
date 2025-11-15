@@ -33,6 +33,7 @@ services:
       PAPERLESS_TIME_ZONE: "Asia/Singapore"
       PAPERLESS_URL: https://paperless.kopparam.com
       PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?err}
+      PAPERLESS_CONSUMER_POLLING: 300
   gotenberg:
     image: docker.io/gotenberg/gotenberg:8.20
     restart: unless-stopped
