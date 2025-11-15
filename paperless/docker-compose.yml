@@ -23,7 +23,7 @@ services:
       - paperless-data-nfs:/usr/src/paperless/data
       - paperless-media-nfs:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
-      - papeless-consume:/usr/src/paperless/consume
+      - paperless-consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_TIKA_ENABLED: 1
