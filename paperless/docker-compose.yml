@@ -53,11 +53,11 @@ volumes:
     external: true
   paperless-redisdata-nfs:
     external: true
-  papeless_consume:
+  paperless-consume:
     driver: local
     driver_opts:
       type: cifs
-      device: "//192.168.18.176/papeless-consume"
+      device: "//192.168.18.176/paperless-consume"
       o: "credentials=/home/k/.smbcredentials,vers=3.0"
 
 networks:
