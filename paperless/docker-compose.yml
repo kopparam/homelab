@@ -23,7 +23,7 @@ services:
       - paperless-data-nfs:/usr/src/paperless/data
       - paperless-media-nfs:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
-      - ./consume:/usr/src/paperless/consume
+      - papeless-consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_TIKA_ENABLED: 1
@@ -53,6 +53,12 @@ volumes:
     external: true
   paperless-redisdata-nfs:
     external: true
+  papeless_consume:
+    driver: local
+    driver_opts:
+      type: cifs
+      device: "//192.168.18.176/papeless-consume"
+      o: "credentials=/home/k/.smbcredentials,vers=3.0"
 
 networks:
   default:
