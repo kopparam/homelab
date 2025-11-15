@@ -58,7 +58,7 @@ volumes:
     driver_opts:
       type: cifs
       device: "//192.168.18.176/paperless-consume"
-      o: "credentials=/root/.smbcredentials,vers=3.0,uid=1000,gid=1000,file_mode=0770,dir_mode=0770"
+      o: "credentials=/root/.smbcredentials,vers=3.0"
 
 networks:
   default:
