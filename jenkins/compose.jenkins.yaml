@@ -48,6 +48,6 @@ networks:
 
 volumes:
   jenkins-docker-certs-nfs:
-    name: jenkins-docker-certs-nfs
+    external: true
   jenkins-data-nfs:
-    name: jenkins-data-nfs
+    external: true
