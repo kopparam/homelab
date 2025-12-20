@@ -1,9 +1,10 @@
 all:
-  # vars:
-  #   ansible_user: k
-  #   ansible_ssh_private_key_file: ~/.ssh/rpi.bak
   hosts:  
     ipi:
       ansible_host: 192.168.171.37 
     docker-pi:
       ansible_host: 192.168.171.36
+  children:
+    piholes:
+      hosts:
+        ipi:

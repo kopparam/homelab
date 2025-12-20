@@ -1,0 +1,13 @@
+---
+- name: Update Pi-hole
+  hosts: piholes
+  become: true
+  tasks:
+    - name: Run pihole update
+      ansible.builtin.command: pihole -up
+      register: pihole_update_output
+      changed_when: "'Everything is up to date' not in pihole_update_output.stdout"
+
+    - name: Show pihole update output
+      ansible.builtin.debug:
+        var: pihole_update_output.stdout_lines
