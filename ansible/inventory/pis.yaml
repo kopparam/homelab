@@ -4,6 +4,6 @@ all:
   #   ansible_ssh_private_key_file: ~/.ssh/rpi.bak
   hosts:  
     ipi:
-      ansible_host: 192.168.18.82 
+      ansible_host: 192.168.171.37 
     docker-pi:
-      ansible_host: 192.168.18.111
+      ansible_host: 192.168.171.36
