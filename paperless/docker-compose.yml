@@ -37,6 +37,8 @@ services:
       PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?err}
       PAPERLESS_CONSUMER_POLLING: 300
       PAPERLESS_PRE_CONSUME_SCRIPT: /usr/src/paperless/scripts/removepassword.sh
+      PAPERLESS_GMAIL_OAUTH_CLIENT_SECRET: ${PAPERLESS_GMAIL_OAUTH_CLIENT_SECRET:?err}
+      PAPERLESS_GMAIL_OAUTH_CLIENT_ID: ${PAPERLESS_GMAIL_OAUTH_CLIENT_ID:?err}
   gotenberg:
     image: docker.io/gotenberg/gotenberg:8.20
     restart: unless-stopped
