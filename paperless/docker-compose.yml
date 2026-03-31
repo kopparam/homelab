@@ -4,21 +4,13 @@ services:
     restart: unless-stopped
     volumes:
       - paperless-redisdata-nfs:/data
-  webserver:
+  paperless:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
     depends_on:
       - broker
       - gotenberg
       - tika
-    ports:
-      - "8000:8000"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.paperless.loadbalancer.server.port=8000"
-      - "traefik.http.routers.paperless.rule=Host(`paperless.kopparam.com`)"
-      - "traefik.http.routers.paperless.entrypoints=websecure"
-      - "traefik.http.routers.paperless.tls.certresolver=kopparamdnsresolver"
     volumes:
       - paperless-data-nfs:/usr/src/paperless/data
       - paperless-media-nfs:/usr/src/paperless/media
@@ -33,7 +25,7 @@ services:
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_TIME_ZONE: "Asia/Singapore"
-      PAPERLESS_URL: https://paperless.kopparam.com
+      PAPERLESS_URL: ${PAPERLESS_URL:?err}
       PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?err}
       PAPERLESS_CONSUMER_POLLING: 300
       PAPERLESS_PRE_CONSUME_SCRIPT: /usr/src/paperless/scripts/removepassword.sh
@@ -51,8 +43,27 @@ services:
   tika:
     image: docker.io/apache/tika:latest
     restart: unless-stopped
+  tailscale:
+    image: tailscale/tailscale:latest
+    restart: unless-stopped
+    hostname: paperless
+    network_mode: service:paperless
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      TS_AUTHKEY: ${TS_AUTHKEY:?err}
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_SERVE_CONFIG: /config/serve.json
+    volumes:
+      - tailscale-state:/var/lib/tailscale
+      - ./tailscale:/config
+    depends_on:
+      - paperless
 
 volumes:
+  tailscale-state:
   paperless-data-nfs:
     external: true
   paperless-media-nfs:
@@ -62,7 +73,3 @@ volumes:
   paperless-consume:
     external: true
 
-networks:
-  default:
-    name: homelab-network
-    external: true
